@@ -32,11 +32,13 @@ async function handleEvent(event) {
         return;
     }
 
-    const imageFiles = filterSupportedImages(items, event);
+    const imageFiles = filterSupportedImages(items);
     if (imageFiles.length === 0) {
         //console.warn("EIF [handleEvent]: No supported image files found.");
         return;
     }
+
+    event.preventDefault();
 
     try {
         const dataTransfer = await convertDataTransfer(imageFiles);
@@ -65,10 +67,9 @@ function getEventItems(event) {
  * Filter supported image files from the event items.
  *
  * @param {DataTransferItemList} items - List of event items.
- * @param {Event} event - The original event object.
  * @returns {File[]} - List of supported image files.
  */
-function filterSupportedImages(items, event) {
+function filterSupportedImages(items) {
     if (!items || typeof items !== 'object' || typeof items.length !== 'number') {
         console.error("EIF [filterSupportedImages]: Invalid items structure.");
         return [];
@@ -85,12 +86,10 @@ function filterSupportedImages(items, event) {
         const file = item.getAsFile();
         const { kind, type } = item;
 
-        if (kind === 'file' && SUPPORTED_IMAGE_TYPES.includes(type) && !shouldSkipFile(type)) {
+        if (kind === 'file' && file && SUPPORTED_IMAGE_TYPES.includes(type) && !shouldSkipFile(type)) {
             imageFiles.push(file);
         }
     });
-
-    event.preventDefault();
 
     return imageFiles;
 }
