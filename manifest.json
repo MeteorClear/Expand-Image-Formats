@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "version": "2.0.4",
+  "version": "2.0.5",
   "name": "Expand Image Formats",
-  "description": "Expand Image Formats in Google Docs/Sheets/Slides. Support Format:'.webp','.bmp','.svg','.avif'. Previous name: Allow WebP",
+  "description": "Expand Image Formats in Google Docs/Sheets/Slides. Support Format:'.webp','.bmp','.svg','.avif'.",
 
   "icons": {
     "16": "images/icon-16.png",

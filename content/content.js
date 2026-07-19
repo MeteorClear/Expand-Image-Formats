@@ -6,9 +6,9 @@ document.addEventListener('paste', handleEvent);
 
 // Supported image MIME type list
 const SUPPORTED_IMAGE_TYPES = [
-    'image/webp', 
-    'image/bmp', 
-    'image/svg+xml', 
+    'image/webp',
+    'image/bmp',
+    'image/svg+xml',
     'image/avif'
 ];
 
@@ -45,7 +45,7 @@ async function handleEvent(event) {
         triggerEvent(dataTransfer, event);
     } catch (error) {
         console.error("EIF [handleEvent]:", error);
-    } 
+    }
 }
 
 
@@ -76,17 +76,11 @@ function filterSupportedImages(items) {
     }
     const imageFiles = [];
 
-    // #Note: 
-    // I don't know why, The AVIF format does not support Google Docs explicitly.
-    // But it works internally. Maybe they will support format someday.
-    const isGoogleDocs = window.location.href.startsWith('https://docs.google.com/document/');
-    const shouldSkipFile = (type) => type === 'image/avif' && isGoogleDocs;
-
     Array.from(items).forEach(item => {
         const file = item.getAsFile();
         const { kind, type } = item;
 
-        if (kind === 'file' && file && SUPPORTED_IMAGE_TYPES.includes(type) && !shouldSkipFile(type)) {
+        if (kind === 'file' && file && SUPPORTED_IMAGE_TYPES.includes(type)) {
             imageFiles.push(file);
         }
     });
